@@ -13,7 +13,9 @@ exports.addFood = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-      res.json({ message: 'Food item added successfully' });
+        res.json({
+            message: `${Name} added successfully. Price: ${Price}, Ingredients: ${Ingredients}, Quantity: ${Quantity}`
+        });
     }
   );
 };
@@ -30,7 +32,7 @@ exports.changeQuantity = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-      res.json({ message: 'Quantity updated successfully' });
+        res.json({ message: `Quantity updated successfully. Changed by ${Quantity} units.` });
     }
   );
 };
@@ -44,7 +46,7 @@ exports.resetQuantity = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-      res.json({ message: 'Quantity reset successfully for all food items' });
+      res.json({ message: `Quantity reset successfully for all food items. Quantity now is 0` });
     }
   );
 };
@@ -58,6 +60,6 @@ exports.getAllFood = (req, res) => {
       console.error(err);
       return res.status(500).json({ error: 'Internal server error' });
     }
-    res.json(rows);
+      res.json({ message: 'Successfully retrieved all food items.', data: rows });
   });
 };
