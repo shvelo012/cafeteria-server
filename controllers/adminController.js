@@ -21,14 +21,22 @@ exports.setIsOpen = (req, res) => {
   const { IsOpen } = req.body;
 
   db.run(
-    'UPDATE ADMIN SET IsOpen = ?',
-    [IsOpen],
-    (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ error: 'Internal server error' });
+      'UPDATE ADMIN SET IsOpen = ?',
+      [IsOpen],
+      (err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        let message;
+        if (IsOpen) {
+          message = 'IsOpen status updated successfully. Cafeteria is now open.';
+        } else {
+          message = 'IsOpen status updated successfully. Cafeteria is now closed.';
+        }
+
+        res.json({ message });
       }
-      res.json({ message: 'IsOpen status updated successfully' });
-    }
   );
 };
