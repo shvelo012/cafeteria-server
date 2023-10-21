@@ -13,16 +13,15 @@ exports.addFood = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-        res.json({
-            message: `${Name} added successfully. Price: ${Price}, Ingredients: ${Ingredients}, Quantity: ${Quantity}`
-        });
+      res.json({
+        message: `${Name} added successfully. Price: ${Price}, Ingredients: ${Ingredients}, Quantity: ${Quantity}`
+      });
     }
   );
 };
 
 exports.changeQuantity = (req, res) => {
   const { Quantity, Id } = req.body;
-
   // Update the quantity of the food item with the specified ID
   db.run(
     'UPDATE FOOD SET Quantity = ? WHERE ID = ?',
@@ -32,7 +31,7 @@ exports.changeQuantity = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
       }
-        res.json({ message: `Quantity updated successfully. Changed by ${Quantity} units.` });
+      res.json({ message: `Quantity updated successfully. Changed by ${Quantity} units.` });
     }
   );
 };
@@ -60,6 +59,17 @@ exports.getAllFood = (req, res) => {
       console.error(err);
       return res.status(500).json({ error: 'Internal server error' });
     }
-      res.json({ message: 'Successfully retrieved all food items.', data: rows });
+    res.json({ message: 'Successfully retrieved all food items.', data: rows });
+  });
+};
+
+exports.deleteAllFood = (req, res) => {
+  // Delete all food items from the FOOD table
+  db.run('DELETE FROM FOOD', (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json({ message: 'Successfully deleted all food items.' });
   });
 };

@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-// const sqlite3 = require('sqlite3').verbose();
-// const db = new sqlite3.Database('./database/localCafeteria.db');
+const port = 4000;
 const cors = require('cors');
 const adminRoutes = require('./routes/adminRoutes');
 const foodRoutes = require('./routes/foodRoutes');
