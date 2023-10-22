@@ -21,22 +21,36 @@ exports.setIsOpen = (req, res) => {
   const { IsOpen } = req.body;
 
   db.run(
-      'UPDATE ADMIN SET IsOpen = ?',
-      [IsOpen],
-      (err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({ error: 'Internal server error' });
-        }
-
-        let message;
-        if (IsOpen) {
-          message = 'IsOpen status updated successfully. Cafeteria is now open.';
-        } else {
-          message = 'IsOpen status updated successfully. Cafeteria is now closed.';
-        }
-
-        res.json({ message });
+    'UPDATE ADMIN SET IsOpen = ?',
+    [Number(IsOpen)],
+    (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Internal server error' });
       }
+
+      let message;
+      if (IsOpen) {
+        message = 'IsOpen status updated successfully. Cafeteria is now open.';
+      } else {
+        message = 'IsOpen status updated successfully. Cafeteria is now closed.';
+      }
+
+      res.json({ message });
+    }
   );
 };
+
+exports.getIsOpen = (req, res) => {
+  // Query the database to get the current value of IsOpen
+  db.get('SELECT IsOpen FROM ADMIN', (selectErr, row) => {
+    if (selectErr) {
+      console.log(selectErr);
+      return res.status(500).json({ error: 'Error retrieving IsOpen value' });
+    }
+
+    const currentIsOpen = row.IsOpen;
+    res.json({ IsOpen: currentIsOpen });
+  });
+};
+
