@@ -43,8 +43,8 @@ exports.setIsOpen = (req, res) => {
 
 exports.getIsOpen = (req, res) => {
   // Query the database to get the current value of IsOpen
-  db.get('SELECT IsOpen FROM ADMIN', (selectErr, row) => {
-    if (selectErr) {
+  db.get('SELECT IsOpen FROM ADMIN', (err, row) => {
+    if (err) {
       console.log(selectErr);
       return res.status(500).json({ error: 'Error retrieving IsOpen value' });
     }
